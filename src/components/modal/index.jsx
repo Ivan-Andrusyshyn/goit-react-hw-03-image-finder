@@ -1,16 +1,22 @@
 import css from "./index.module.css";
 import PropTypes from "prop-types";
-const Modal = ({ img, openModal }) => {
-  return (
-    <div className={css.backdrop} onClick={openModal}>
+const Modal = ({ img, toggleModal, isHidden }) => {
+  return isHidden ? (
+    <div className={css.backdrop} onClick={toggleModal}>
       <div className={css.modal}>
         <img src={img} alt="img" />
       </div>
     </div>
+  ) : (
+    ""
   );
 };
 export { Modal };
 Modal.propTypes = {
-  img: PropTypes.string.isRequired,
-  openModal: PropTypes.func.isRequired,
+  img: PropTypes.oneOfType([
+    PropTypes.object.isRequired,
+    PropTypes.string.isRequired,
+  ]),
+  isHidden: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };

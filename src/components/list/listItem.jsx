@@ -1,14 +1,14 @@
 import css from "./listItem.module.css";
 import { ImageGalleryItem } from "components/imgItem/imgItem";
 import PropTypes from "prop-types";
-const ImageGallery = ({ fetchImg, openModal }) => {
+const ImageGallery = ({ fetchImg, toggleModal }) => {
   return (
     <ul className={css.list_img}>
       {fetchImg.map(({ id, largeImageURL, webformatURL }) => {
         return (
           <ImageGalleryItem
             key={id}
-            openModal={openModal}
+            toggleModal={toggleModal}
             largeImageURL={largeImageURL}
             webformatURL={webformatURL}
           />
@@ -19,7 +19,7 @@ const ImageGallery = ({ fetchImg, openModal }) => {
 };
 export { ImageGallery };
 ImageGallery.propTypes = {
-  openModal: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
   fetchImg: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,

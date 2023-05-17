@@ -3,18 +3,16 @@ import { ApiImg } from "./components/fetch";
 import { ImageGallery } from "./components/list/listItem";
 import { BtnLoadMore } from "./components/btnLoadMore/load";
 import css from "./app.module.css";
-import { RotatingLines } from "react-loader-spinner";
 import { Searchbar } from "./components/search/search";
 import { Modal } from "components/modal";
-
+import { Loader } from "components/loader/loader";
 class App extends Component {
   state = {
     fetchImg: [],
     countPage: 1,
     loading: false,
-    error: null,
-    search: "",
     isHidden: false,
+    search: "",
     imgModal: "",
   };
   hendlerSearch = (e) => {
@@ -61,7 +59,7 @@ class App extends Component {
       countPage: prevState.countPage + 1,
     }));
   };
-  openModal = (img) => {
+  toggleModal = (img) => {
     this.setState((prevState) => ({
       imgModal: img,
       isHidden: !prevState.isHidden,
@@ -69,7 +67,8 @@ class App extends Component {
   };
 
   render() {
-    const { hendlerIncrement, hendlerSearch, hendlerChange, openModal } = this;
+    const { hendlerIncrement, hendlerSearch, hendlerChange, toggleModal } =
+      this;
     const { fetchImg, loading, isHidden, imgModal } = this.state;
     return (
       <div className={css.container}>
@@ -77,23 +76,19 @@ class App extends Component {
           hendlerSearch={hendlerSearch}
           hendlerChange={hendlerChange}
         />
-        <ImageGallery fetchImg={fetchImg} openModal={openModal} />
-        {isHidden && (
-          <Modal img={imgModal} onEsc={this.onEsc} openModal={openModal} />
-        )}
-        <RotatingLines
-          strokeColor="orange"
-          strokeWidth="5"
-          animationDuration="1"
-          width="96"
-          visible={loading}
+        <ImageGallery fetchImg={fetchImg} toggleModal={toggleModal} />
+        <Modal
+          img={imgModal}
+          isHidden={isHidden}
+          onEsc={this.onEsc}
+          toggleModal={toggleModal}
         />
-        {!loading && (
-          <BtnLoadMore
-            hendlerIncrement={hendlerIncrement}
-            fetchImg={fetchImg}
-          />
-        )}
+        <Loader loading={loading} />
+        <BtnLoadMore
+          hendlerIncrement={hendlerIncrement}
+          fetchImg={fetchImg}
+          loading={loading}
+        />
       </div>
     );
   }
