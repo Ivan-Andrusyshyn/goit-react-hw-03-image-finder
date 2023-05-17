@@ -77,12 +77,7 @@ class App extends Component {
           hendlerChange={hendlerChange}
         />
         <ImageGallery fetchImg={fetchImg} toggleModal={toggleModal} />
-        <Modal
-          img={imgModal}
-          isHidden={isHidden}
-          onEsc={this.onEsc}
-          toggleModal={toggleModal}
-        />
+        <Modal img={imgModal} isHidden={isHidden} toggleModal={toggleModal} />
         <Loader loading={loading} />
         <BtnLoadMore
           hendlerIncrement={hendlerIncrement}
