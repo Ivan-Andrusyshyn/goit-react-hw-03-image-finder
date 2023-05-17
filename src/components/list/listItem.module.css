@@ -1,0 +1,8 @@
+.list_img {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 15px;
+  list-style: none;
+  gap: 20px;
+}

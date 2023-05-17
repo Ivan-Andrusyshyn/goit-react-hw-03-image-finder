@@ -1,0 +1,15 @@
+.list_item {
+  width: 340px;
+  height: 200px;
+}
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: transform 0.3s linear;
+  border-radius: 5px;
+}
+.img_item:hover {
+  transform: scale(1.1);
+}
