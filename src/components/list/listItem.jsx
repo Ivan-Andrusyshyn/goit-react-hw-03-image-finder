@@ -19,7 +19,6 @@ const ImageGallery = ({ fetchImg, toggleModal }) => {
 };
 export { ImageGallery };
 ImageGallery.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
   fetchImg: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
