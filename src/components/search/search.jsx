@@ -1,6 +1,6 @@
 import css from "./search.module.css";
 import PropTypes from "prop-types";
-const Searchbar = ({ hendlerChange, hendlerSearch }) => {
+const Searchbar = ({ hendlerSearch }) => {
   return (
     <header>
       <form className={css.form} onSubmit={hendlerSearch}>
@@ -10,7 +10,6 @@ const Searchbar = ({ hendlerChange, hendlerSearch }) => {
 
         <input
           className={css.search_input}
-          onChange={(e) => hendlerChange(e)}
           type="text"
           name="search"
           autoComplete="off"
@@ -24,6 +23,5 @@ const Searchbar = ({ hendlerChange, hendlerSearch }) => {
 
 export { Searchbar };
 Searchbar.propTypes = {
-  hendlerChange: PropTypes.func.isRequired,
   hendlerSearch: PropTypes.func.isRequired,
 };

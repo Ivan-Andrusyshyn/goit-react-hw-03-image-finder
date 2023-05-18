@@ -17,17 +17,15 @@ class App extends Component {
   };
   hendlerSearch = (e) => {
     e.preventDefault();
-    const newSearchd = e.target[1].value;
-    if (newSearchd) {
-      this.setState({ fetchImg: [] });
-      this.takeImg();
-      e.currentTarget.reset();
+    const { search } = this.state;
+    const { value } = e.target[1];
+    if (value !== search) {
+      this.setState({
+        search: value.toLowerCase(),
+        fetchImg: [],
+        countPage: 1,
+      });
     }
-  };
-
-  hendlerChange = (e) => {
-    const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
   };
 
   takeImg = async () => {
@@ -48,12 +46,26 @@ class App extends Component {
       }, 500);
     }
   };
-
+  componentDidMount() {
+    document.addEventListener("keydown", this.handlerKeyDown);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handlerKeyDown);
+  }
+  handlerKeyDown = (event) => {
+    if (event.key === "Escape") {
+      this.toggleModal();
+    }
+  };
   componentDidUpdate(_, prevState) {
-    if (prevState.countPage !== this.state.countPage) {
+    if (
+      prevState.countPage !== this.state.countPage ||
+      prevState.search !== this.state.search
+    ) {
       this.takeImg();
     }
   }
+
   hendlerIncrement = () => {
     this.setState((prevState) => ({
       countPage: prevState.countPage + 1,
@@ -67,23 +79,22 @@ class App extends Component {
   };
 
   render() {
-    const { hendlerIncrement, hendlerSearch, hendlerChange, toggleModal } =
-      this;
+    const { hendlerIncrement, hendlerSearch, toggleModal } = this;
     const { fetchImg, loading, isHidden, imgModal } = this.state;
     return (
       <div className={css.container}>
-        <Searchbar
-          hendlerSearch={hendlerSearch}
-          hendlerChange={hendlerChange}
-        />
+        <Searchbar hendlerSearch={hendlerSearch} />
         <ImageGallery fetchImg={fetchImg} toggleModal={toggleModal} />
-        <Modal img={imgModal} isHidden={isHidden} toggleModal={toggleModal} />
+        {isHidden && (
+          <Modal img={imgModal} isHidden={isHidden} toggleModal={toggleModal} />
+        )}
         <Loader loading={loading} />
-        <BtnLoadMore
-          hendlerIncrement={hendlerIncrement}
-          fetchImg={fetchImg}
-          loading={loading}
-        />
+        {fetchImg.length > 0 && !loading && (
+          <BtnLoadMore
+            hendlerIncrement={hendlerIncrement}
+            fetchImg={fetchImg}
+          />
+        )}
       </div>
     );
   }
