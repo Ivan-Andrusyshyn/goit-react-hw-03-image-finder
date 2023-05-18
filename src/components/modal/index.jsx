@@ -1,8 +1,8 @@
 import css from "./index.module.css";
 import PropTypes from "prop-types";
-const Modal = ({ img, toggleModal }) => {
+const Modal = ({ img, closeModal }) => {
   return (
-    <div className={css.backdrop} onClick={toggleModal}>
+    <div className={css.backdrop} onClick={closeModal}>
       <div className={css.modal}>
         <img src={img} alt="img" />
       </div>
@@ -15,5 +15,5 @@ Modal.propTypes = {
     PropTypes.object.isRequired,
     PropTypes.string.isRequired,
   ]),
-  toggleModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };

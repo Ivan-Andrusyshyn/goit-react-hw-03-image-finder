@@ -46,17 +46,6 @@ class App extends Component {
       }, 500);
     }
   };
-  componentDidMount() {
-    document.addEventListener("keydown", this.handlerKeyDown);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.handlerKeyDown);
-  }
-  handlerKeyDown = (event) => {
-    if (event.key === "Escape") {
-      this.toggleModal();
-    }
-  };
   componentDidUpdate(_, prevState) {
     if (
       prevState.countPage !== this.state.countPage ||
@@ -65,27 +54,40 @@ class App extends Component {
       this.takeImg();
     }
   }
-  toggleModal = (img) => {
-    this.setState((prevState) => ({
-      imgModal: img,
-      isHidden: !prevState.isHidden,
-    }));
-  };
   hendlerIncrement = () => {
     this.setState((prevState) => ({
       countPage: prevState.countPage + 1,
     }));
   };
+  componentDidMount() {
+    document.addEventListener("keydown", this.handlerKeyDown);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handlerKeyDown);
+  }
+  handlerKeyDown = (event) => {
+    if (event.key === "Escape") {
+      this.setState({ isHidden: false });
+    }
+  };
+  closeModal = (e) => {
+    if (e.target === e.currentTarget) {
+      this.setState({ isHidden: false });
+    }
+  };
+  openModal = (img) => {
+    this.setState({ imgModal: img, isHidden: true });
+  };
 
   render() {
-    const { hendlerIncrement, hendlerSearch, toggleModal } = this;
+    const { hendlerIncrement, hendlerSearch, openModal, closeModal } = this;
     const { fetchImg, loading, isHidden, imgModal } = this.state;
     return (
       <div className={css.container}>
         <Searchbar hendlerSearch={hendlerSearch} />
-        <ImageGallery fetchImg={fetchImg} toggleModal={toggleModal} />
+        <ImageGallery fetchImg={fetchImg} openModal={openModal} />
         {isHidden && (
-          <Modal img={imgModal} isHidden={isHidden} toggleModal={toggleModal} />
+          <Modal img={imgModal} isHidden={isHidden} closeModal={closeModal} />
         )}
         <Loader loading={loading} />
         {fetchImg.length > 0 && !loading && (
