@@ -65,16 +65,15 @@ class App extends Component {
       this.takeImg();
     }
   }
-
-  hendlerIncrement = () => {
-    this.setState((prevState) => ({
-      countPage: prevState.countPage + 1,
-    }));
-  };
   toggleModal = (img) => {
     this.setState((prevState) => ({
       imgModal: img,
       isHidden: !prevState.isHidden,
+    }));
+  };
+  hendlerIncrement = () => {
+    this.setState((prevState) => ({
+      countPage: prevState.countPage + 1,
     }));
   };
 
